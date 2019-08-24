@@ -6,6 +6,7 @@ import (
 )
 
 func RegisterHandles()*httprouter.Router{
+	
 	router:=httprouter.New();
 
 	router.POST("/user",CreateUser)
