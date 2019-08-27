@@ -12,6 +12,11 @@ type SignedUp struct {
 	Success bool `json:"success"`
 	SessionId string `json:"session_id"`
 }
+//{
+//	"success":aaaa,
+//	"session_id":ssssss
+//}
+
 
 // Data model
 type VideoInfo struct {
