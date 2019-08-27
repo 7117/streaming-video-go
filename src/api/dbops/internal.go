@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"sync"
 	"log"
+	"fmt"
 )
 
 // 新增
@@ -15,7 +16,9 @@ func InsertSession(sid string, ttl int64, uname string) error {
 	if err != nil {
 		return err
 	}
-	_, err := stmtIns.Exec(sid, ttlstr, uname)
+	a, err := stmtIns.Exec(sid, ttlstr, uname)
+
+	fmt.Println(a);
 
 	if err != nil {
 		return err
@@ -40,7 +43,7 @@ func RetriveSession(sid string) (*defs.SimpleSession, error) {
 		return nil, err
 	}
 
-	var ttlint int64
+	// var ttlint int64
 	// ParseInt 将字符串转换为 int 类型
 	if res, err := strconv.ParseInt(ttl, 10, 64); err == nil {
 		ss.TTL=res;
