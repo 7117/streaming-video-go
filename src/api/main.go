@@ -4,6 +4,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// 新属性
 type middleWareHandler struct {
 	// router结构体
 	// r是router结构体的数据  
@@ -15,18 +16,18 @@ type middleWareHandler struct {
 func NewMiddleWareHandler(r *httprouter.Router) http.Handler {
 	// m是一个新值  
 	m := middleWareHandler{}
-	// 让原来的接口r  等于 自己定义的m结构体的r
-	// 里面的内容因为一样  所以两个可以相等   ducktype  m的是自定义的   r是main函数的  内容其实是一个东西
+	// 给一个属性赋值
 	m.r = r
 	// handle是一个接口  进行接收m结构体
 	return m
 }
 
 // 我们自己的方法
+// serverHTTP方法是在handler接口里面的  必须哟这个接口
 func (m middleWareHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// 进行校验session
 	validateUserSession(r)
-	// 原来的serverHTTP()
+	// 原来的serverHTTP()  再加上原来的serverHTTP方法
 	m.r.ServeHTTP(w, r)
 }
 
@@ -42,10 +43,13 @@ func RegisterHandlers() *httprouter.Router {
 
 func main() {
 	// router是一个结构体
+	// r是router形式的
 	r := RegisterHandlers()
 	// 将r（路由等信息接口形式）注入到NewMiddleWareHandler里面
 	// 返回的是接口形式的数据
+	// mh是handle形式的
 	mh := NewMiddleWareHandler(r)
+	// 字符串   handle形
 	http.ListenAndServe("127.0.0.1:8000", mh)
 }
 
