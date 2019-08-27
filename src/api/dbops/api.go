@@ -1,15 +1,14 @@
 package dbops
 
 import (
-	"log"
-	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
 	"api/defs"
 	"api/utils"
+	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
+	"log"
 	"time"
 	// "fmt"
 )
-
 
 func AddUserCredential(loginName string, pwd string) error {
 	stmtIns, err := dbConn.Prepare("INSERT INTO users (login_name, pwd) VALUES (?, ?)")
@@ -60,7 +59,6 @@ func DeleteUser(loginName string, pwd string) error {
 	return nil
 }
 
-
 func AddNewVideo(aid int, name string) (*defs.VideoInfo, error) {
 
 	vid, err := utils.NewUUID()
@@ -75,9 +73,8 @@ func AddNewVideo(aid int, name string) (*defs.VideoInfo, error) {
 		(id, author_id, name, display_ctime) VALUES(?, ?, ?, ?)`)
 
 	if err != nil {
-		return nil,err
+		return nil, err
 	}
-
 
 	_, err = stmtIns.Exec(vid, aid, name, ctime)
 	if err != nil {
@@ -90,7 +87,6 @@ func AddNewVideo(aid int, name string) (*defs.VideoInfo, error) {
 	return res, nil
 }
 
-
 func GetVideoInfo(vid string) (*defs.VideoInfo, error) {
 	stmtOut, err := dbConn.Prepare("SELECT author_id, name, display_ctime FROM video_info WHERE id=?")
 
@@ -99,7 +95,7 @@ func GetVideoInfo(vid string) (*defs.VideoInfo, error) {
 	var name string
 
 	err = stmtOut.QueryRow(vid).Scan(&aid, &name, &dct)
-	if err != nil && err != sql.ErrNoRows{
+	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}
 
@@ -161,7 +157,7 @@ func ListComments(vid string, from, to int) ([]*defs.Comment, error) {
 		return res, err
 	}
 
-	// 迭代器  row.Next()
+	//?? row.Next()
 	for rows.Next() {
 		var id, name, content string
 		if err := rows.Scan(&id, &name, &content); err != nil {
@@ -175,8 +171,3 @@ func ListComments(vid string, from, to int) ([]*defs.Comment, error) {
 
 	return res, nil
 }
-
-
-
-
-

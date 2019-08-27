@@ -1,13 +1,11 @@
 package dbops
 
 import (
-	"testing"
-	"strconv"
-	"time"
 	"fmt"
+	"strconv"
+	"testing"
+	"time"
 )
-
-
 
 var tempvid string
 
@@ -46,7 +44,7 @@ func testGetUser(t *testing.T) {
 	}
 }
 
-func  testDeleteUser(t *testing.T) {
+func testDeleteUser(t *testing.T) {
 	err := DeleteUser("avenssi", "123")
 	if err != nil {
 		t.Errorf("Error of DeleteUser: %v", err)
@@ -64,7 +62,6 @@ func testRegetUser(t *testing.T) {
 	}
 }
 
-
 func TestVideoWorkFlow(t *testing.T) {
 	clearTables()
 	t.Run("PrepareUser", testAddUser)
@@ -79,7 +76,6 @@ func testAddVideoInfo(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error of AddVideoInfo: %v", err)
 	}
-
 
 	tempvid = vi.Id
 }
@@ -100,7 +96,7 @@ func testDeleteVideoInfo(t *testing.T) {
 
 func testRegetVideoInfo(t *testing.T) {
 	vi, err := GetVideoInfo(tempvid)
-	if err != nil || vi != nil{
+	if err != nil || vi != nil {
 		t.Errorf("Error of RegetVideoInfo: %v", err)
 	}
 }
@@ -128,7 +124,7 @@ func testAddComments(t *testing.T) {
 func testListComments(t *testing.T) {
 	vid := "12345"
 	from := 1514764800
-	// atoi字符串转化为整型  
+	// atoi字符串转化为整型
 	// 将整数转换为字符串形式
 	// 第一个是数字
 	// 第二个是进制
@@ -142,5 +138,4 @@ func testListComments(t *testing.T) {
 	for i, ele := range res {
 		fmt.Printf("comment: %d, %v \n", i, ele)
 	}
-}	
-
+}
