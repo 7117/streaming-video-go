@@ -20,8 +20,10 @@ func NewMiddleWareHandler(r *httprouter.Router, cc int) http.Handler {
 func RegisterHandlers() *httprouter.Router {
 	router := httprouter.New()
 
+	// 播放
 	router.GET("/videos/:vid-id", streamHandler)
 
+	// 上传
 	router.POST("/upload/:vid-id", uploadHandler)
 
 	router.GET("/testpage", testPageHandler)
