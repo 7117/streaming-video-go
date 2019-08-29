@@ -20,7 +20,7 @@ func deleteVideo(vid string) error {
 	return nil
 }
 
-// 收集者：收集数据给datachannel
+// 收集者：收集数据给datachannel  数据的来源是db
 func VideoClearDispatcher(dc dataChan) error {
 	// 每次读取三条
 	res, err := dbops.ReadVideoDeletionRecord(3)
@@ -41,7 +41,7 @@ func VideoClearDispatcher(dc dataChan) error {
 	return nil
 }
 
-// 生产者：
+// 执行者消费datachannel的数据，删除视频删除db数据
 func VideoClearExecutor(dc dataChan) error {
 	errMap := &sync.Map{}
 	var err error
