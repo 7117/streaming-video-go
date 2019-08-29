@@ -8,8 +8,7 @@ import (
 )
 
 func TestRunner(t *testing.T) {
-	// 给datachan进行赋值
-	// 然后给分配者分配数据
+	// 给datachannel进行赋值  谁给datachannel进行赋值 就是分配者  所以d就是一个分配者
 	d := func(dc dataChan) error {
 		for i := 0; i < 30; i++ {
 			dc <- i;
@@ -19,7 +18,7 @@ func TestRunner(t *testing.T) {
 		return nil
 	}
 
-	// 给消费者分配数据
+	// 给datachannel取出消费数据  谁给datachannel进行取出数据  就是执行者   所以e就是一个执行者
 	e := func(dc dataChan) error {
 		forloop:
 			for {

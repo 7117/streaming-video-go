@@ -1,7 +1,7 @@
 package taskrunner
 
 import (
-
+	"fmt"
 )
 
 // runner里面跑一个常驻的任务 比如叫做startDispatcher 任务会长时间的等待channel
@@ -27,8 +27,10 @@ type Runner struct{
 func NewRunner(size int, longlived bool, d fn, e fn) *Runner {
 	return &Runner {
 		// 非堵塞的才可以
-		Controller: make(chan string, 1),
-		Error: make(chan string, 1),
+		// 如果不为1的话 ，只要有值就会堵塞
+		// 设置为1之后   有一个值不会堵塞
+		Controller: make(chan string,1),
+		Error: make(chan string,1),
 		Data: make(chan interface{}, size),
 		datasize: size,
 		longlived: longlived,
@@ -89,12 +91,15 @@ func (r *Runner) startDispatch() {
 			}
 		//默认执行的 
 		default:
-
+			fmt.Println("default");
 		}
 	}
 }
 
 func (r *Runner) StartAll() {
+	fmt.Println("堵塞");
+	// 赋值  让分配者执行
 	r.Controller <- READY_TO_DISPATCH
+	fmt.Println("堵塞");
 	r.startDispatch()
 }
