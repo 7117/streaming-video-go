@@ -10,8 +10,8 @@ import (
 // 处理者说我的任务已经处理完成，请分发者读取分发新的任务；
 // 分发者说新的任务我已经读取分发了，请处理者进行处理。
 // data channel：数据
-// 分发者的作用就是给数据channel进行赋值
-// 执行者的作用就是把数据channel进行读取
+// 分发者的作用就是给数据channel进行赋值  赋值完之后给controlchannel说让执行者执行吧
+// 执行者的作用就是把数据channel进行读取  读取完之后给controlchannel说让消费者执行吧  可能会等待啊！
 type Runner struct{
 	// 控制channel
 	Controller controlChan
