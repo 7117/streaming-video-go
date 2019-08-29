@@ -10,6 +10,8 @@ import (
 // 处理者说我的任务已经处理完成，请分发者读取分发新的任务；
 // 分发者说新的任务我已经读取分发了，请处理者进行处理。
 // data channel：数据
+// 分发者的作用就是给数据channel进行赋值
+// 执行者的作用就是把数据channel进行读取
 type Runner struct{
 	// 控制channel
 	Controller controlChan
@@ -53,29 +55,39 @@ func (r *Runner) startDispatch() {
 	// 只要r.Controller有信息，就会执行
 	for {
 		select {
+		// 控制器channel里面有信息
 		case c :=<- r.Controller:
 			// d==d
 			if c == READY_TO_DISPATCH {
+				// 分发者说新的任务数据我已经读取分发了，请处理者进行处理。
+				// Dispatcher就是d  d的作用给DataChannel进行赋值  就是一个分发者的过程
 				err := r.Dispatcher(r.Data)
 				if err != nil {
 					r.Error <- CLOSE
 				} else {
+					// 给执行器发送信息  说你执行吧
 					r.Controller <- READY_TO_EXECUTE
 				}
 			}
 
 			if c == READY_TO_EXECUTE {
+				// 处理者说我的任务已经处理完成，请分发者读取分发新的任务；
+				// 如果没有信息的任务，那就等待吧
+				// Executor就是e   e的作用就是读取datachannel里面的数据  就是一个执行者的过程
 				err := r.Executor(r.Data)
 				if err != nil {
 					r.Error <- CLOSE
 				} else {
+					// 执行完之后  给ctrolchannel说执行完了  再让分配者去执行吧
 					r.Controller <- READY_TO_DISPATCH
 				}
 			}
+		//错误退channel里面有信息
 		case e :=<- r.Error:
 			if e == CLOSE {
 				return
 			}
+		//默认执行的 
 		default:
 
 		}

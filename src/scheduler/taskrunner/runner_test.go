@@ -24,8 +24,8 @@ func TestRunner(t *testing.T) {
 		forloop:
 			for {
 				select {
-				case d :=<- dc:
-					log.Printf("Executor received: %v", d)
+				case a :=<- dc:
+					log.Printf("Executor received: %v", a)
 				default:
 					break forloop
 				}
@@ -34,9 +34,10 @@ func TestRunner(t *testing.T) {
 		return errors.New("Executor")
 	}
 
-	// 初始化
+	// 初始化  进行赋值属性
+	// channel长度  是否清空垃圾  分配者  消费者
 	runner := NewRunner(30, false, d, e)
-	// 运行
+	// 运行程序  开启了生产消费者模式
 	go runner.StartAll()
 	// 睡三秒
 	time.Sleep(3 * time.Second)
