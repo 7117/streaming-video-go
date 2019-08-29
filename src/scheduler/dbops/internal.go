@@ -23,6 +23,7 @@ func ReadVideoDeletionRecord(count int) ([]string, error) {
 
 	// 遍历
 	for rows.Next() {
+		// id就是video_id
 		var id string
 		if err := rows.Scan(&id); err != nil {
 			return ids, err

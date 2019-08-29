@@ -11,6 +11,9 @@ const(
 	// 所以controlChan是命令的传输者
 	// 所以datachan是数据的池子
 	CLOSE = "c"
+
+	VIDEO_PATH = "./videos/"
+
 )
 // 预定义
 type controlChan chan string
