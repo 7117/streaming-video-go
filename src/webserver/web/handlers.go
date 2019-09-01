@@ -3,8 +3,8 @@ package main
 import (
 	"html/template"
 	// "encoding/json"
-	"net/http"
 	"log"
+	"net/http"
 	// "io/ioutil"
 	// "net/url"
 	// "net/http/httputil"
@@ -12,29 +12,29 @@ import (
 	// "io"
 )
 
-func homeHandler(w http.ResponseWriter,r *http.Request,ps httprouter.Params) {
+func homeHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	// r 里面包含着httpserver httpserver里面含有这cookie方法
-	cname,err1:=r.Cookie("username")
-	sid,err2:=r.Cookie("session")
+	cname, err1 := r.Cookie("username")
+	sid, err2 := r.Cookie("session")
 
 	// 无值的时候  没有登录的
-	if err1!=nil || err2!=nil {
+	if err1 != nil || err2 != nil {
 		// 需要赋值的参数
-		p:=&HomePage{Name:"孙潇"}
+		p := &HomePage{Name: "孙潇"}
 		// 将html认定为模板文件
-		t, e := template.ParseFiles("D:/Github/Streaming-video/src/template/home.html")
-		if e !=nil {
-			log.Printf("parsing template home.html error:%s",e)
+		t, e := template.ParseFiles("D:/Github/Streaming-video/src/webserver/template/home.html")
+		if e != nil {
+			log.Printf("parsing template home.html error:%s", e)
 			return
 		}
 		// t为模板 p写入到w传递给模板t
-		t.Execute(w,p)
+		t.Execute(w, p)
 		return
 	}
 
 	// 有值得时候  登陆了的
-	if len(cname.Value)!=0 && len(sid.Value)!=0{
-		http.Redirect(w,r,"D:/Github/Streamingmedia/src/webserver/template/userhome.html",http.StatusFound)
+	if len(cname.Value) != 0 && len(sid.Value) != 0 {
+		http.Redirect(w, r, "D:/Github/Streaming-video/src/webserver/template/userhome.html", http.StatusFound)
 		return
 	}
 }
@@ -47,17 +47,17 @@ func homeHandler(w http.ResponseWriter,r *http.Request,ps httprouter.Params) {
 
 // 	// if err!=nil  {
 // 	// 	http.Redirect(w,r,"/",http.StatusFound)
-// 	// 	return  
-// 	// }	
-	
+// 	// 	return
+// 	// }
+
 // 	// //Cookie值
 // 	// if len(cname.Value) !=0 {
-// 	// 	p=&UserPage{Name:cname.Value}		
+// 	// 	p=&UserPage{Name:cname.Value}
 // 	// //填充值
 // 	// }else if len(fname)!=0{
 // 	// 	p=&UserPage{Name:fname}
 // 	// }
-	
+
 // 	// 注册页面
 // 	p:=&UserPage{Name:"aaaa"}
 // 	t,e:=template.ParseFiles("D:/Github/Streamingmedia/src/webserver/template/userhome.html")
@@ -87,7 +87,7 @@ func homeHandler(w http.ResponseWriter,r *http.Request,ps httprouter.Params) {
 // 	}
 // 	// request
 // 	request(apibody,w,r)
-	
+
 // 	defer r.Body.Close()
 // }
 
