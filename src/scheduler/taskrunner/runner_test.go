@@ -3,8 +3,9 @@ package taskrunner
 import (
 	"testing"
 	"log"
+	"fmt"
 	"time"
-	"errors"
+	// "errors"
 )
 
 func TestRunner(t *testing.T) {
@@ -30,7 +31,9 @@ func TestRunner(t *testing.T) {
 				}
 			}
 
-		return errors.New("Executor")
+		return nil
+		// 截止信号
+		// return errors.New("Executor")
 	}
 
 	// 初始化  进行赋值属性
@@ -39,5 +42,6 @@ func TestRunner(t *testing.T) {
 	// 运行程序  开启了生产消费者模式
 	go runner.StartAll()
 	// 睡三秒
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
+
 }

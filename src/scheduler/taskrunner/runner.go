@@ -63,6 +63,8 @@ func (r *Runner) startDispatch() {
 			if c == READY_TO_DISPATCH {
 				// 分发者说新的任务数据我已经读取分发了，请处理者进行处理。
 				// Dispatcher就是d  d的作用给DataChannel进行赋值  就是一个分发者的过程
+
+				// 生产者是一个函数  这个函数是给datachannel进行赋值数据  每次只能赋值一次  所以要循环
 				err := r.Dispatcher(r.Data)
 				if err != nil {
 					r.Error <- CLOSE
@@ -76,6 +78,8 @@ func (r *Runner) startDispatch() {
 				// 处理者说我的任务已经处理完成，请分发者读取分发新的任务；
 				// 如果没有信息的任务，那就等待吧
 				// Executor就是e   e的作用就是读取datachannel里面的数据  就是一个执行者的过程
+
+				// 执行者是一个函数   这个函数是给datachannel进行取出数据  进行消费  每次取出数据 所以要循环
 				err := r.Executor(r.Data)
 				if err != nil {
 					r.Error <- CLOSE
@@ -97,9 +101,7 @@ func (r *Runner) startDispatch() {
 }
 
 func (r *Runner) StartAll() {
-	fmt.Println("堵塞");
 	// 赋值  让分配者执行
 	r.Controller <- READY_TO_DISPATCH
-	fmt.Println("堵塞");
 	r.startDispatch()
 }
