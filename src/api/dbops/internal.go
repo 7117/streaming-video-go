@@ -57,6 +57,7 @@ func RetriveSession(sid string) (*defs.SimpleSession, error) {
 	return ss,nil;
 }
 
+// 把所有的session放入到sync.map里面
 func RetrieveAllSessions() (*sync.Map, error) {
 	m := &sync.Map{}
 	stmtOut, err := dbConn.Prepare("SELECT * FROM sessions")
