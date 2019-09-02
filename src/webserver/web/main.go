@@ -17,20 +17,20 @@ func RegisterHandler() *httprouter.Router {
 	router.GET("/home", homeHandler)
 	router.POST("/home", homeHandler)
 
-	// // 用户主页
-	// router.GET("/userhome",userHomeHandler)
-	// router.POST("/userhome",userHomeHandler)
+	// 用户主页
+	router.GET("/userhome",userHomeHandler)
+	router.POST("/userhome",userHomeHandler)
 
-	// // api代理
-	// router.POST("/api",apiHandler)
+	// api代理
+	router.POST("/api",apiHandler)
 
-	// // proxy
-	// router.POST("/upload/:vid-id",proxyHandler)
+	// proxy
+	router.POST("/upload/:vid-id",proxyHandler)
 
-	// // 静态
-	// // 会自动挂载  把tempalte文件夹下面的东西挂载到statics
-	// // 127.0.0.1:8080/statics/(template文件夹下面的内容)
-	// router.ServeFiles("/statics/*filepath",http.Dir("./template"))
+	// 静态
+	// 会自动挂载  把tempalte文件夹下面的东西挂载到statics
+	// 127.0.0.1:8080/statics/(template文件夹下面的内容)
+	router.ServeFiles("/statics/*filepath",http.Dir("./template"))
 
 	return router
 }
