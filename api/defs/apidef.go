@@ -2,7 +2,7 @@ package defs
 
 //reqeusts
 type UserCredential struct {
-	// 自动转化为json
+	// 自动转化为json  别名
 	Username string `json:"user_name"`
 	Pwd string `json:"pwd"`
 }

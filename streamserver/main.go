@@ -9,7 +9,7 @@ type middleWareHandler struct {
 	r *httprouter.Router
 	l *ConnLimiter
 }
-
+//初始化
 func NewMiddleWareHandler(r *httprouter.Router, cc int) http.Handler {
 	m := middleWareHandler{}
 	m.r = r

@@ -14,9 +14,9 @@ type middleWareHandler struct {
 }
 
 func NewMiddleWareHandler(r *httprouter.Router) http.Handler {
-	// m是一个新值  
+	// m是一个新值  将路由赋值进去
 	m := middleWareHandler{}
-	// 给一个属性赋值
+	// 给一个属性赋值   路由
 	m.r = r
 	// handle是一个接口  进行接收m结构体
 	return m
