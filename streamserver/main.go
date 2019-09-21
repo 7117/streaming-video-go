@@ -17,6 +17,7 @@ func NewMiddleWareHandler(r *httprouter.Router, cc int) http.Handler {
 	return m
 }
 
+
 func RegisterHandlers() *httprouter.Router {
 	router := httprouter.New()
 
